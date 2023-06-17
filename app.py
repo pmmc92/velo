@@ -40,7 +40,7 @@ for i in n_races:
         ###Scrapping Date
         scrap_date= soup.find("div",class_="subcategories-carousel")
         content_date = scrap_date.find_all("div",class_="subcategory-item")
-        date_str = str(content[i])
+        date_str = str(content_date[i])
 
         ###Regex of date###
         pattern_date = "</b><br/>" + "(.+?)"  + " "
