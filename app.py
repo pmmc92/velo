@@ -6,6 +6,7 @@ import numpy as np
 from datetime import datetime
 import plotly.express as pe
 import streamlit as st
+import re
 
 st.title("Velogames - FFUL No Espaço")
 
@@ -21,31 +22,31 @@ cumulative = 0
 
 for i in n_races:
     for code in teams_ids:
-        '''General Request'''
+        ###General Request
         initial_request = requests.get("https://www.velogames.com/sixes-superclasico/2023/teamroster.php?tid={}&ga=13&st={}".format(code,i))
         soup = BeautifulSoup(initial_request.content, 'html.parser')
         
-        '''Scrapping points and name'''
+        ###Scrapping points and name
         scrap_race = soup.find("ul",class_="popular-posts")
         content_race = scrap_race.find_all('li')
         result = str(content_race[3])
         
-        ''' Regex of race'''
+        ###Regex of race
         pattern_Score = "<b>" + "(.+?)"  + "</b"
         score = re.search(pattern_Score,result).group(1)
         pattern_Race = "<li>" + "(.+?)"  + ":"
         Race = re.search(pattern_Race,result).group(1)
 
-        '''Scrapping Date'''
+        ###Scrapping Date
         scrap_date= soup.find("div",class_="subcategories-carousel")
         content_date = scrap_date.find_all("div",class_="subcategory-item")
         date_str = str(content[i])
 
-        '''Regex of date'''
+        ###Regex of date###
         pattern_date = "</b><br/>" + "(.+?)"  + " "
         date_final = re.search(pattern_date,date_str).group(1)
 
-        '''Creating dataset'''
+        ###Creating dataset###
         race.append(Race)
         points.append(score)
         team_id.append(code)
